@@ -26,7 +26,7 @@ https://emscripten.org/docs/getting_started/downloads.html
 ## Todos:
 
 - [x] Add keyboard input controls to move the square around
-- [ ] Figure out why things crash with an Odin allocation.
+- [ ] Figure out why things crash with an Odin allocation. See: https://github.com/odin-lang/Odin/discussions/4097
 
 ## MIT license:
 
