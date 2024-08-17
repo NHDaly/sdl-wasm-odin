@@ -1,4 +1,4 @@
-# sdl-wasm [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+# sdl-wasm-odin [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A simple example of compiling Odin/SDL to WebAssembly and binding it to an HTML5 canvas.
 
