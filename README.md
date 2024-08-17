@@ -21,8 +21,6 @@ https://emscripten.org/docs/getting_started/downloads.html
 5. Edit src/game.odin to make your own game!
 <br/>
 
-<img width="640" alt="screen" src="https://user-images.githubusercontent.com/3165988/57870831-c38f0d80-77bc-11e9-9b37-19b64d8f22a7.png">
-
 ## Todos:
 
 - [x] Add keyboard input controls to move the square around
