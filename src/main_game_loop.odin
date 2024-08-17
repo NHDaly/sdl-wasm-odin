@@ -66,18 +66,11 @@ initialize_the_game :: proc() {
 	)
 	assert(window != nil, sdl2.GetErrorString())
 	gWindow = window
+    // Must not do VSync because we run the tick loop on the same thread as rendering.
+    gRenderer = sdl2.CreateRenderer(window, -1, sdl2.RENDERER_SOFTWARE) // software=0
 }
 
 run_game_loop :: proc() {
-    // First-time initialization
-    if gRenderer == nil {
-        window := gWindow
-
-        // Must not do VSync because we run the tick loop on the same thread as rendering.
-        gRenderer = sdl2.CreateRenderer(window, -1, sdl2.RENDERER_SOFTWARE) // software=0
-        // assert(gWindow != nil, sdl2.GetErrorString())
-        // assert(gRenderer != nil, sdl2.GetErrorString())
-    }
 	renderer := gRenderer
 
     event: sdl2.Event
@@ -87,24 +80,13 @@ run_game_loop :: proc() {
             // TODO
             assert(false)
             return
-        case .KEYDOWN:
-            if event.key.keysym.scancode == sdl2.SCANCODE_ESCAPE {
-                // TODO
-                assert(false)
-                return
-            }
         }
-        // handle_event(&event)
+        handle_event(event)
     }
 
-    sdl2.SetRenderDrawColor(renderer, 0, 0, 0, 0xff)
-    sdl2.RenderClear(renderer)
+    update_game()
 
-    sdl2.SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff)
-    rect := sdl2.Rect{10, 10, 100, 100}
-    sdl2.RenderDrawRect(renderer, &rect)
-
-    // render_game(renderer)
+    render_game(renderer)
 
     sdl2.RenderPresent(renderer)
 }

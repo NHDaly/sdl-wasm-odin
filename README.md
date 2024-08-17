@@ -1,6 +1,6 @@
 # sdl-wasm [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A simple example of compiling C/SDL to WebAssembly and binding it to an HTML5 canvas. 
+A simple example of compiling Odin/SDL to WebAssembly and binding it to an HTML5 canvas.
 
 Live demo: https://shlomnissan.github.io/sdl-wasm
 
@@ -16,7 +16,7 @@ https://emscripten.org/docs/getting_started/downloads.html
 3. Run `make` or build manually:<br/>
 `emcc main.c -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' --preload-file assets -o index.js`
 
-4. Chrome doesn't support file XHR requests so you need to open index.html from a web server. You can use Emscripten for that too: 
+4. Chrome doesn't support file XHR requests so you need to open index.html from a web server. You can use Emscripten for that too:
 `emrun index.html`
 
 5. 🕹Use the arrow keys to move the texture around.
