@@ -23,7 +23,7 @@ https://emscripten.org/docs/getting_started/downloads.html
 
 ## Todos:
 
-- [ ] Add keyboard input controls to move the square around
+- [x] Add keyboard input controls to move the square around
 - [ ] Figure out why things crash with an Odin allocation.
 
 ## MIT license:
