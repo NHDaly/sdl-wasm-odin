@@ -10,8 +10,16 @@ import "core:math/linalg"
 import sdl2 "sdl2"
 
 
-init_game :: proc() {
+Game :: struct {
+	time:     f64,
+	dt:       f64,
+}
 
+
+init_game :: proc() {
+    game := new(Game)
+    game.time = 10.0
+    game.dt = 10.0
 }
 
 handle_event :: proc(event: sdl2.Event) {
