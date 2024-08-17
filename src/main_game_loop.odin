@@ -11,7 +11,7 @@ import "core:math/linalg"
 import sdl2 "sdl2"
 // import sdl2 "vendor:sdl2"
 // main :: proc () {
-//     _main()
+//     init_game()
 
 //     for {
 //         step()
@@ -23,8 +23,8 @@ import sdl2 "sdl2"
 
 ctx: runtime.Context
 
-@(export, link_name="_main")
-_main :: proc "c" () {
+@(export, link_name="init_game")
+init_game :: proc "c" () {
     ctx = runtime.default_context()
     context = ctx
 

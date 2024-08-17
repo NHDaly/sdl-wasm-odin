@@ -1,11 +1,11 @@
 #include <emscripten/emscripten.h>
 
-extern void _main();
+extern void init_game();
 extern void step();
 extern void clean_up();
 
 int main() {
-    _main();
+    init_game();
 
     emscripten_set_main_loop(step, 0, 1);
 
