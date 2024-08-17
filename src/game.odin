@@ -10,6 +10,9 @@ import "core:math/linalg"
 import sdl2 "sdl2"
 
 
+init_game :: proc() {
+
+}
 
 handle_event :: proc(event: sdl2.Event) {
     #partial switch event.type {

@@ -1,17 +1,13 @@
 package main
 
-import "core:runtime"
-import "core:fmt"
-import "core:mem"
-import "core:math/rand"
-import "core:math/linalg"
+import "base:runtime"
 
 // when TARGET == .freestanding_wasm32 {
 
 import sdl2 "sdl2"
 // import sdl2 "vendor:sdl2"
 // main :: proc () {
-//     init_game()
+//     init_sdl()
 
 //     for {
 //         step()
@@ -23,12 +19,12 @@ import sdl2 "sdl2"
 
 ctx: runtime.Context
 
-@(export, link_name="init_game")
-init_game :: proc "c" () {
+@(export, link_name="init_sdl")
+init_sdl :: proc "c" () {
     ctx = runtime.default_context()
     context = ctx
 
-    initialize_the_game()
+    initialize_sdl()
 }
 
 @(export, link_name="step")
@@ -52,7 +48,7 @@ clean_up_the_game :: proc() {
 gWindow : ^sdl2.Window
 gRenderer : ^sdl2.Renderer
 
-initialize_the_game :: proc() {
+initialize_sdl :: proc() {
 
 	assert(sdl2.Init(sdl2.INIT_VIDEO) == 0, sdl2.GetErrorString())
 
@@ -68,6 +64,8 @@ initialize_the_game :: proc() {
 	gWindow = window
     // Must not do VSync because we run the tick loop on the same thread as rendering.
     gRenderer = sdl2.CreateRenderer(window, -1, sdl2.RENDERER_SOFTWARE) // software=0
+
+    init_game()
 }
 
 run_game_loop :: proc() {
