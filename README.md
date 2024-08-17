@@ -2,37 +2,34 @@
 
 A simple example of compiling Odin/SDL to WebAssembly and binding it to an HTML5 canvas.
 
-Live demo: https://shlomnissan.github.io/sdl-wasm
-
 ## Installation:
 
 1. Install Emscripten:<br/>
 https://emscripten.org/docs/getting_started/downloads.html
 
 2. Clone the repository:<br/>
-`git clone https://github.com/shlomnissan/sdl-wasm`<br/>
+`git clone https://github.com/NHDaly/sdl-wasm-odin`<br/>
 `cd sdl-wasm`
 
-3. Run `make` or build manually:<br/>
-`emcc main.c -s WASM=1 -s USE_SDL=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' --preload-file assets -o index.js`
+3. Run `make`, which does `odin build src` for wasm, then builds a wasm binary via `emcc`.
 
 4. Chrome doesn't support file XHR requests so you need to open index.html from a web server. You can use Emscripten for that too:
 `emrun index.html`
 
-5. 🕹Use the arrow keys to move the texture around.
+5. Edit src/game.odin to make your own game!
 <br/>
 
 <img width="640" alt="screen" src="https://user-images.githubusercontent.com/3165988/57870831-c38f0d80-77bc-11e9-9b37-19b64d8f22a7.png">
 
 ## Todos:
 
-- [x] Add keyboard input controls to move the square around
-- [x] Include SDL_Image and render a texture instead of the blue square
+- [ ] Add keyboard input controls to move the square around
+- [ ] Figure out why things crash with an Odin allocation.
 
 ## MIT license:
 
 ```
-Copyright (c) 2019 Betamark
+Copyright (c) 2024 Nathan Daly
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
