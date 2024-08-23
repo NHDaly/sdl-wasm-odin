@@ -9,18 +9,21 @@ import "core:math/linalg"
 import sdl2 "sdl2"
 // import sdl2 "vendor:sdl2"
 
+PLAYER_SPEED := 100.0 // pixels per second
+
 
 Game :: struct {
-	time:     f64,
 	dt:       f64,
 }
 
-x,y : i32 = 10,10
+game: ^Game;
+
+x,y : f32 = 10,10
 
 init_game :: proc() {
-    game := new(Game)
-    game.time = 10.0
-    game.dt = 10.0
+    game = new(Game)
+
+    game.dt = f64(FRAME_MS) / f64(1000)   // seconds
 }
 
 handle_event :: proc(event: sdl2.Event) {
@@ -31,10 +34,11 @@ handle_event :: proc(event: sdl2.Event) {
 
 update_game :: proc() {
 	keyboard: []u8 = sdl2.GetKeyboardStateAsSlice()
-    if b8(keyboard[sdl2.SCANCODE_UP   ]) | b8(keyboard[sdl2.SCANCODE_W]) { y -= 1 }
-    if b8(keyboard[sdl2.SCANCODE_DOWN ]) | b8(keyboard[sdl2.SCANCODE_S]) { y += 1 }
-    if b8(keyboard[sdl2.SCANCODE_LEFT ]) | b8(keyboard[sdl2.SCANCODE_A]) { x -= 1 }
-    if b8(keyboard[sdl2.SCANCODE_RIGHT]) | b8(keyboard[sdl2.SCANCODE_D]) { x += 1 }
+    speed := f32(PLAYER_SPEED * game.dt);
+    if b8(keyboard[sdl2.SCANCODE_UP   ]) | b8(keyboard[sdl2.SCANCODE_W]) { y -= speed }
+    if b8(keyboard[sdl2.SCANCODE_DOWN ]) | b8(keyboard[sdl2.SCANCODE_S]) { y += speed }
+    if b8(keyboard[sdl2.SCANCODE_LEFT ]) | b8(keyboard[sdl2.SCANCODE_A]) { x -= speed }
+    if b8(keyboard[sdl2.SCANCODE_RIGHT]) | b8(keyboard[sdl2.SCANCODE_D]) { x += speed }
 }
 
 render_game :: proc(renderer: ^sdl2.Renderer) {
@@ -43,6 +47,6 @@ render_game :: proc(renderer: ^sdl2.Renderer) {
     sdl2.RenderClear(renderer)
 
     sdl2.SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xff)
-    rect := sdl2.Rect{x, y, 100, 100}
+    rect := sdl2.Rect{i32(x), i32(y), 100, 100}
     sdl2.RenderDrawRect(renderer, &rect)
 }

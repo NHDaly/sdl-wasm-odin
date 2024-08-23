@@ -7,7 +7,7 @@ extern void clean_up();
 int main() {
     init_sdl();
 
-    emscripten_set_main_loop(step, 0, 1);
+    emscripten_set_main_loop(step, -1, 1);
 
     clean_up();
     return 0;

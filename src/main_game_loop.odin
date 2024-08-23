@@ -7,6 +7,7 @@ import "core:mem"
 
 import sdl2 "sdl2"
 // import sdl2 "vendor:sdl2"
+// import "core:fmt"
 // main :: proc () {
 //     init_sdl()
 
@@ -34,7 +35,6 @@ init_sdl :: proc "c" () {
     // Initialize the allocators used in this application.
     mem.arena_init(&mainMemoryArena, mainMemoryData[:])
     mem.arena_init(&tempAllocatorArena, tempAllocatorData[:])
-
     ctx.allocator      = mem.arena_allocator(&mainMemoryArena)
     ctx.temp_allocator = mem.arena_allocator(&tempAllocatorArena)
 
@@ -69,6 +69,14 @@ clean_up_the_game :: proc() {
 gWindow : ^sdl2.Window
 gRenderer : ^sdl2.Renderer
 
+
+FRAME_RATE_FPS := 60
+// TODO: This doesn't work in wasm... :(
+// FRAME_MS := i32(1000 / FRAME_RATE_FPS)  // ms per frame
+FRAME_MS := i32(16)  // ms per frame
+time : i32
+dt := i32(0)
+
 initialize_sdl :: proc() {
 
 	assert(sdl2.Init(sdl2.INIT_VIDEO) == 0, sdl2.GetErrorString())
@@ -87,11 +95,14 @@ initialize_sdl :: proc() {
     gRenderer = sdl2.CreateRenderer(window, -1, sdl2.RENDERER_SOFTWARE) // software=0
 
     init_game()
+
+    time = 0
 }
 
 run_game_frame :: proc() {
+    frame_start := i32(sdl2.GetTicks())
     // On each frame, clear the temp_allocator.
-    // free_all(context.temp_allocator)
+    free_all(context.temp_allocator)
 
 	renderer := gRenderer
 
@@ -106,7 +117,19 @@ run_game_frame :: proc() {
         handle_event(event)
     }
 
-    update_game()
+    // handle first frame
+    if time == 0 {
+        time = i32(sdl2.GetTicks())
+    }
+    now := i32(sdl2.GetTicks())
+    assert(now >= time)
+    dt += i32(now - time)
+    time = now
+    for dt >= FRAME_MS {
+        dt -= FRAME_MS
+
+        update_game()
+    }
 
     render_game(renderer)
 
