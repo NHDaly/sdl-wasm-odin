@@ -38,6 +38,12 @@ init_sdl :: proc "c" () {
     ctx.allocator      = mem.arena_allocator(&mainMemoryArena)
     ctx.temp_allocator = mem.arena_allocator(&tempAllocatorArena)
 
+    context = ctx
+
+    // Test the allocator works
+    x := new(i64)
+    assert(x != nil)
+
     // Initialize the game
     initialize_sdl()
 }
