@@ -3,16 +3,24 @@ package main
 
 import "base:runtime"
 import "core:fmt"
-import "core:mem"
 import "core:math/rand"
 import "core:math/linalg"
 
 import sdl2 "sdl2"
+// import sdl2 "vendor:sdl2"
+
+
+Game :: struct {
+	time:     f64,
+	dt:       f64,
+}
 
 x,y : i32 = 10,10
 
 init_game :: proc() {
-
+    game := new(Game)
+    game.time = 10.0
+    game.dt = 10.0
 }
 
 handle_event :: proc(event: sdl2.Event) {

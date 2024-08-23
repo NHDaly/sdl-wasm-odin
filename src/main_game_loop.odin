@@ -1,6 +1,7 @@
 package main
 
 import "base:runtime"
+import "core:mem"
 
 // when TARGET == .freestanding_wasm32 {
 
@@ -19,11 +20,25 @@ import sdl2 "sdl2"
 
 ctx: runtime.Context
 
+tempAllocatorData: [mem.Megabyte * 4]byte
+tempAllocatorArena: mem.Arena
+
+mainMemoryData: [mem.Megabyte * 16]byte
+mainMemoryArena: mem.Arena
+
 @(export, link_name="init_sdl")
 init_sdl :: proc "c" () {
     ctx = runtime.default_context()
     context = ctx
 
+    // Initialize the allocators used in this application.
+    mem.arena_init(&mainMemoryArena, mainMemoryData[:])
+    mem.arena_init(&tempAllocatorArena, tempAllocatorData[:])
+
+    ctx.allocator      = mem.arena_allocator(&mainMemoryArena)
+    ctx.temp_allocator = mem.arena_allocator(&tempAllocatorArena)
+
+    // Initialize the game
     initialize_sdl()
 }
 
@@ -31,7 +46,7 @@ init_sdl :: proc "c" () {
 step :: proc "contextless" () {
     context = ctx
     // free_all(context.temp_allocator)
-    run_game_loop()
+    run_game_frame()
 }
 
 @(export, link_name="clean_up")
@@ -68,7 +83,10 @@ initialize_sdl :: proc() {
     init_game()
 }
 
-run_game_loop :: proc() {
+run_game_frame :: proc() {
+    // On each frame, clear the temp_allocator.
+    // free_all(context.temp_allocator)
+
 	renderer := gRenderer
 
     event: sdl2.Event
