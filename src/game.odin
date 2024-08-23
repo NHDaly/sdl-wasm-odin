@@ -1,13 +1,13 @@
 
 package main
 
-import "core:runtime"
+import "base:runtime"
 import "core:fmt"
-import "core:mem"
 import "core:math/rand"
 import "core:math/linalg"
 
 import sdl2 "sdl2"
+// import sdl2 "vendor:sdl2"
 
 
 Game :: struct {
