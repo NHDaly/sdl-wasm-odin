@@ -4,6 +4,8 @@ A simple example of compiling Odin/SDL to WebAssembly and binding it to an HTML5
 
 Live demo available here: https://nhdaly.github.io/sdl-wasm-odin/
 
+Forked from shlomnissan/sdl-wasm, and updated for Odin.
+
 ## Installation:
 
 1. Install Emscripten:<br/>
